@@ -7,7 +7,7 @@ const Homepage = ({children}) => {
   const authUser=useSelector(state=>state.UserReducer)
   return (
     <div className='relative z-10 container flex flex-col  items-center justify-start 
-    border border-blue-500 h-[100vh] w-7xl mx-auto'>
+     border-blue-500 h-[100vh] w-7xl mx-auto'>
 
 
     <Header/>

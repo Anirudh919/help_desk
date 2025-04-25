@@ -9,7 +9,7 @@ export default defineConfig({
   server:{
     proxy: {
       '/api': {
-        target: 'http://localhost:5000',
+        target: 'https://desk-help-2k25.onrender.com/',
         changeOrigin: true,
         
       },
