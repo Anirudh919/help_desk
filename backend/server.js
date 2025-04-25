@@ -38,9 +38,9 @@ app.use('/api/notes', notesRouter);
 
 
 
-app.get("*",(req,res)=>{
-   res.sendFile(path.resolve(_dirname,"frontend","dist","index.html"))
-})
+// app.get("*",(req,res)=>{
+//    res.sendFile(path.resolve(_dirname,"frontend","dist","index.html"))
+// })
 
 
 
