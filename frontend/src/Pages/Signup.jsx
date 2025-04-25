@@ -7,6 +7,7 @@ import { FiLoader } from "react-icons/fi";
 // import { useSignup } from '../Hooks/useSignup.js';
 import { Toaster } from 'react-hot-toast';
 import { useSignup } from '../Hooks/useSignup';
+import { Link } from 'react-router-dom';
 export function Signup() {
 
     const [isView,setIsView]=useState(false)
@@ -81,6 +82,10 @@ export function Signup() {
                           
                             
                         </div>
+
+
+
+                        <div><Link to="/login" className=' text-emerald-300 text-xs underline  '>Alrady have an Account?</Link></div>
                         <div className="px-2 py-1 relative text-center">
 
                             {loading ? (

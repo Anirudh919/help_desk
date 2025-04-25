@@ -6,6 +6,7 @@ import {motion} from 'framer-motion'
 import { Toaster } from 'react-hot-toast'
 import { useLogin } from '../Hooks/useLogin'
 import { useSelector } from 'react-redux'
+import {Link } from "react-router-dom"
 export function Login() {
 	const [isView,setIsView]=useState(false)
 	
@@ -66,6 +67,8 @@ export function Login() {
 
                                 </div>
 						</div>
+
+						<div><Link to="/signup" className=' text-[#8ecae6] text-xs underline  '>Create new Account?</Link></div>
 
 						<div className="px-2 py-1 relative text-center">
 
