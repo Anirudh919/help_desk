@@ -16,26 +16,33 @@ export default function EditTicketpage(){
   const {id}=useParams()
   
 
-  const [isEditOpen,setIsEditOpen]=useState(true)
+  const [isEditOpen,setIsEditOpen]=useState(false)
 
-  const {getTicketById,editTicket}=useGetTicketById()
+  const {getTicketById,ticketDetails:ticket,loading}=useGetTicketById()
+
+  const users=useSelector(state=>state.AllUsersReducer)
+  const agents =users?.filter(user=>user?.role =="agent")
+  
+
+
 const {deleteTicketById} = useDeleteTicketById()
+const {updateMyTicket}=useUpdateTicket()
 
-  const {updateMyTicket}=useUpdateTicket()
-
-  const ticket=useSelector(state=>state.TicketReducer)
-  console.log(ticket)
+  // const ticket=useSelector(state=>state.TicketReducer)
+  
 
 
   const [formData, setFormData] = useState({
-    title:editTicket?.subject,
-    description: editTicket?.description ,
-    category: editTicket?.category ,
-    createdBy:editTicket?.createdBy?.name ,
-    priority:editTicket?.priority ,
-    status:editTicket?.status ,
-    assignedTo:editTicket?.assignedTo ,
+    title: '',
+    description: '',
+    category: '',
+    createdBy: '',
+    priority: '',
+    status: '',
+    assignedTo: '',
   });
+
+  console.log(formData)
 
 
 
@@ -46,13 +53,34 @@ const {deleteTicketById} = useDeleteTicketById()
   };
 
   useEffect(()=>{
-   getTicketById(id)
+      getTicketById(id)    
+      
+    },[id])
+
+  useEffect(()=>{
+   if (ticket) {
     
-  },[id])
+    setFormData({
+      title: ticket.subject || '',
+      description: ticket.description || '',
+      category: ticket.category || '',
+      createdBy: ticket.createdBy?._id || '',
+      priority: ticket.priority || '',
+      status: ticket.status || '',
+      assignedTo: ticket.assignedTo?._id || '',
+    });
+  }
+    
+  },[ticket])
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateMyTicket(id,formData);
+    const cleanData = { ...formData };
+
+    if (!cleanData.assignedTo) {
+      delete cleanData.assignedTo;
+    }
+    updateMyTicket(id,cleanData);
     setFormData({ title: '', description: '', category: '',priority:"",status:"" });
   };
 
@@ -63,10 +91,14 @@ const {deleteTicketById} = useDeleteTicketById()
   return (
 <div className="flex items-start justify-center ">
 
+
+{loading? <TicketSkeleton/>:
+<>
+
     <motion.div 
-        initial={{ opacity: 0, x: 0 }}
-        animate={{ opacity: 1, x: -10 }}
-        exit={{ opacity: 0, x: 0 }}
+        initial={{ opacity: 0, x:50 }}
+        animate={{ opacity: 1, x:0 }}
+        exit={{ opacity: 0, x:50 }}
         transition={{ duration: .3, delay: 0.1, ease:"easeInOut" }}
     
      className="w-1/2 mx-auto p-4 shadow rounded bg-gray-900">
@@ -119,7 +151,7 @@ const {deleteTicketById} = useDeleteTicketById()
           className="w-full border-b cursor-not-allowed border-gray-600 p-2 rounded"
           
         >
-          {ticket?.assignedTo}</p>
+          {ticket?.assignedTo ? ticket?.assignedTo : "###"}</p>
       </div>
 
 
@@ -160,7 +192,7 @@ const {deleteTicketById} = useDeleteTicketById()
     <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded cursor-pointer">
         Cancel 
       </button>
-  ):(<button type="submit" className="w-full bg-blue-500 text-white py-2 rounded cursor-pointer">
+  ):(<button type="submit" className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded cursor-pointer">
     Edit 
   </button>)
 }
@@ -179,15 +211,12 @@ const {deleteTicketById} = useDeleteTicketById()
     </motion.div>
 
     <AnimatePresence>
-
-  
-
 {
   isEditOpen && (
     <motion.div 
-    initial={{ opacity: 0, x: 0 }}
-    animate={{ opacity: 1, x: -10 }}
-    exit={{ opacity: 0, x: 0 }}
+    initial={{ opacity: 0, x:50 }}
+    animate={{ opacity: 1, x:0 }}
+    exit={{ opacity: 0, x:50 }}
     transition={{ duration: .3, delay: 0.1, ease:"easeInOut" }}
 
 className="w-1/2 mx-auto p-4 shadow rounded bg-gray-900">
@@ -204,17 +233,7 @@ className="w-1/2 mx-auto p-4 shadow rounded bg-gray-900">
       required
     />
   </div>
-  {/* <div className="mb-3">
-    <label className="block mb-1">Created By</label>
-    <input
-      type="text"
-      name="title"
-      value="Marcos"
-      onChange={handleChange}
-      className="w-full border p-2 rounded"
-      required
-    />
-  </div> */}
+
 
   <div className="mb-3">
     <label className="block mb-1">Description</label>
@@ -245,16 +264,26 @@ className="w-1/2 mx-auto p-4 shadow rounded bg-gray-900">
   <div className="mb-3">
     <label className="block mb-1">Assigned To:</label>
     <select
-      name="description"
-      value="hazer"
+      name="assignedTo"
+      value={formData?.assignedTo || ""}
       onChange={handleChange}
       className="w-full border p-2 rounded border-gray-600 bg-gray-900"
       required
     >
+ <option value="">Select Agent</option>
+      {
+        agents.map(agent=>(
+          <option value={agent?._id} key={agent?._id}>
+            {agent?.name}
+          </option>
+        ))
+      }
+    
 
-      <option value="hazer">Hazer</option>
-      <option value="john">John</option>
-      <option value="alvert">Alvert</option>
+
+
+
+
 
 
 
@@ -267,7 +296,7 @@ className="w-1/2 mx-auto p-4 shadow rounded bg-gray-900">
     <label className="block mb-1">Department</label>
     <select
       name="category"
-      value={formData.department}
+      value={formData.category}
       onChange={handleChange}
       className="w-full border p-2 rounded border-gray-600 bg-gray-900"
     >
@@ -283,14 +312,14 @@ className="w-1/2 mx-auto p-4 shadow rounded bg-gray-900">
   <div className="mb-3">
     <label className="block mb-1">Priority</label>
     <select
-      name="category"
+      name="priority"
       value={formData.priority}
       onChange={handleChange}
       className="w-full border  border-gray-600 p-2 rounded bg-gray-900"
     >
 
 <option value={"high"}>High</option>
-<option  value={"medim"}>Medium</option>
+<option  value={"medium"}>Medium</option>
 <option value={"low"}>Low</option>
 
 
@@ -323,16 +352,14 @@ type="submit" className="w-full bg-blue-500 text-white py-2 rounded cursor-point
   
 
 </motion.div>
-
-    
-  )
+ )
 }
 </AnimatePresence>
+</>
 
 
 
-
-
+}
 
 
 
@@ -346,3 +373,25 @@ type="submit" className="w-full bg-blue-500 text-white py-2 rounded cursor-point
 };
 
 
+
+
+export function TicketSkeleton() {
+  return (
+    <div className="w-1/2 mx-auto p-4 shadow rounded bg-gray-900 animate-pulse">
+      <div className="h-6 bg-gray-700 rounded mb-6 w-1/3"></div> {/* Title */}
+
+      {/* Skeleton fields */}
+      {[...Array(7)].map((_, i) => (
+        <div key={i} className="mb-4">
+          <div className="h-4 bg-gray-700 rounded w-1/4 mb-2"></div> {/* Label */}
+          <div className="h-10 bg-gray-800 rounded"></div> {/* Input Field */}
+        </div>
+      ))}
+
+      <div className="flex gap-4 mt-6">
+        <div className="h-10 bg-gray-700 rounded w-full"></div> {/* Edit/Cancel */}
+        <div className="h-10 bg-gray-700 rounded w-full"></div> {/* Delete */}
+      </div>
+    </div>
+  );
+}

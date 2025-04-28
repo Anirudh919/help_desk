@@ -31,6 +31,7 @@ const getMyNotes=async()=>{
           
             // setTickets(newNote);
             dispatch(setNotes(myNotes))
+            localStorage.setItem("my-notes",JSON.stringify(myNotes))
             
             
             // localStorage.setItem("authInfo",JSON.stringify(user))

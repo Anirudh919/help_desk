@@ -18,7 +18,7 @@ export function useUpdateTicket(){
     
 
 const updateMyTicket=async(id,payload)=>{
-    console.log(payload)
+    
     
 
     setLoading(true)
@@ -32,12 +32,12 @@ const updateMyTicket=async(id,payload)=>{
             body:JSON.stringify(payload)
         })
         let {updatedTicket,success,message}=await res.json()
-        console.log(updatedTicket)
+        console.log(updatedTicket,message)
         if(!updatedTicket || !success) throw new Error(message);
         
         else
         {   
-            toast.success("Ticket Updated Successfully")
+            toast.success(message)
             dispatch(updateTicket(updatedTicket))
             navigate("/")
             

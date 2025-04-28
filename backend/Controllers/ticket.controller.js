@@ -46,32 +46,6 @@ export async function getAllTickets(req, res) {
     }
 }   
 
-// export async function getBookings(req,res){
-//     try {
-//         const { userId } = req.params;
-//         const bookings = await Room.find({ bookedBy: userId });
-
-//         if (!bookings) {
-//             return res.status(404).json({
-//                 success: false,
-//                 message: "No bookings found for this user",
-//             });
-//         }
-
-//         res.status(200).json({
-//             success: true,
-//             message: "Bookings fetched successfully",
-//             bookings,
-//         });
-//     } catch (error) {
-//         res.status(500).json({
-//             success: false,
-//             message: "Internal server error",
-//             error: error.message,
-//         });
-//     }
-
-// }
 
 
 
@@ -171,6 +145,7 @@ export async function updateTicket(req,res){
   const { id } = req.params;
   
   const updates = req.body;
+  console.log( `updated== ${updates} id == ${id}`)
 
   try {
 
@@ -213,141 +188,3 @@ export const deleteTicketById = async (req, res) => {
   }
 };
 
-
-// export async function cancelRoom(req,res){
-//     try {
-//         const { id } = req.params;
-//         const {userId}=req.body;
-//         const room = await Room.findOne({ _id: id });
-
-
-//         if (!room) {
-//             return res.status(404).json({
-//                 success: false,
-//                 message: "Room not found",
-//             });
-//         }
-
-//         if (room.roomAvailability) {
-//             return res.status(400).json({
-//                 success: false,
-//                 message: "Room is not booked",
-//             });
-//         }
-//         if(room.bookedBy.toString() == userId || req.user.role == "admin"){
-//             room.roomAvailability = true;
-//             room.bookedBy = null; 
-//             await room.save();
-    
-//            return res.status(200).json({
-//                 success: true,
-//                 message: "Room booking cancelled successfully",
-//                 room,
-//             });
-//         }
-
-
-//              res.status(403).json({
-//                 success: false,
-//                 message: "You are not authorized to cancel this booking",
-//             });
-//         }  
-      
-
-      
-//     catch (error) {
-//         res.status(500).json({
-//             success: false,
-//             message: "Internal server error",
-//             error: error.message,
-//         });
-//     }
-    
-
-
-
-// }
-
-// export async function checkoutRoom(req,res){
-//     try {
-//         const { id } = req.params;
-//         const {userId}=req.body;
-//         const room = await Room.findOne({ roomNumber: id });
-
-//         if (!room) {
-//             return res.status(404).json({
-//                 success: false,
-//                 message: "Room not found",
-//             });
-//         }
-
-//         if (room.roomAvailability) {
-//             return res.status(400).json({
-//                 success: false,
-//                 message: "Room is not booked",
-//             });
-//         }
-//         if(room.bookedBy.toString() == userId || req.user.role == "admin"){
-
-
-//             room.roomAvailability = true;
-//             room.bookedBy = null; 
-//             await room.save();
-        
-    
-//           return  res.status(200).json({
-//                 success: true,
-//                 message: "Room checked out successfully",
-//                 room,
-//             })}
-// else{
-//      res.status(403).json({
-//         success: false,
-//         message: "You are not authorized to cancel this booking",
-//     });
-
-// }
-        
-      
-//     } catch (error) {
-//         res.status(500).json({
-//             success: false,
-//             message: "Internal server error",
-//             error: error.message,
-//         });
-//     }
-// }
-
-
-
-// export const getAllTickets = async (req, res) => {
-//   try {
-//     let tickets;
-
-//     if (req.user.role === 'admin' || req.user.role === 'agent') {
-//       tickets = await Ticket.find();
-//     } else {
-//       tickets = await Ticket.find({ createdBy: req.user.id });
-//     }
-
-//     res.json(tickets);
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// };
-
-// export const getTicketById = async (req, res) => {
-//   try {
-//     const ticket = await Ticket.findById(req.params.id);
-//     if (!ticket) return res.status(404).json({ message: 'Ticket not found' });
-
-//     // Restrict user from accessing others' tickets
-//     if (req.user.role === 'customer' && ticket.createdBy.toString() !== req.user.id) {
-//       return res.status(403).json({ message: 'Access denied' });
-//     }
-
-//     res.json(ticket);
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// };

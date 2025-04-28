@@ -11,9 +11,11 @@ export function useGetTicketById(){
 
     
     const [loading,setLoading]=useState(false)
-    const [editTicket,setEditTicket]=useState([])
+    // const [editTicket,setEditTicket]=useState([])
+
+    const [ticketDetails,setTicketDetails]=useState({})
     
-    const dispatch=useDispatch()  
+    // const dispatch=useDispatch()  
 
 const getTicketById=async(id)=>{
 
@@ -28,12 +30,13 @@ const getTicketById=async(id)=>{
         
         else
         {  
-            // setTickets(myTickets);
-            setEditTicket(ticket)
-            dispatch(setTickets(ticket))
+           
+            // setEditTicket(ticket)
+            // dispatch(setTickets(ticket))
+            setTicketDetails(ticket)
             
             
-            // localStorage.setItem("authInfo",JSON.stringify(user))
+           
             
         }
         
@@ -64,7 +67,7 @@ const getTicketById=async(id)=>{
 }
 
 
-return{getTicketById,editTicket,loading}
+return{getTicketById,loading,ticketDetails}
 
 
 

@@ -31,7 +31,7 @@ const getMyTickets=async()=>{
             // setTickets(myTickets);
             dispatch(setTickets(myTickets))
             
-            localStorage.setItem("my-tickets",JSON.stringify(myTickets))
+            // localStorage.setItem("my-tickets",JSON.stringify(myTickets))
             
             
             // localStorage.setItem("authInfo",JSON.stringify(user))

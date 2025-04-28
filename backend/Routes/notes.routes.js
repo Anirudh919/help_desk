@@ -4,24 +4,7 @@ import { isAuthenticated,validateUser } from '../Middlewares/protectedRoutes.js'
 import { createNotes, deleteNoteById, getMyNotes, getNoteById, updateNote } from '../Controllers/notes.controllers.js';
 
 
-// export const roomRoutes = express.Router();
 
-
-
-// roomRoutes.get("/",getAllRooms)
-// roomRoutes.get("/getrooms/:id",getRoomById)
-// roomRoutes.put("/book/:id",validateUser, bookRoom)
-
-// roomRoutes.put("/cancel/:id",validateUser,cancelRoom)
-
-
-// roomRoutes.put("/checkout/:id",validateUser,checkoutRoom)
-// roomRoutes.get("/getbookings/:userId",validateUser,getBookings)
-
-
-
-
-// roomRoutes.delete("/delete/:id", validateUser,deleteRoomById);
 
 
 export const notesRouter = express.Router();

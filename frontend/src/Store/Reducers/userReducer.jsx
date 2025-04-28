@@ -1,5 +1,9 @@
 import { combineReducers } from "redux"
 
+
+
+
+// auth user
 function UserReducer(state=JSON.parse(localStorage.getItem("authInfo")) || null,action){
     const {type,payload}=action
 
@@ -29,6 +33,11 @@ function UserReducer(state=JSON.parse(localStorage.getItem("authInfo")) || null,
 
 }
 
+
+
+
+
+// all customsers GET/users
 function AllUsersReducer(state=[],action){
     const {type,payload}=action
 
@@ -44,8 +53,8 @@ function AllUsersReducer(state=[],action){
 
 
 
-
-function TicketReducer(state=JSON.parse(localStorage.getItem("my-tickets")) || [],action){
+// all my-tickets GET/tickets
+function TicketReducer(state= [],action){
     const {type,payload}=action
 
     switch(type){
@@ -56,15 +65,13 @@ function TicketReducer(state=JSON.parse(localStorage.getItem("my-tickets")) || [
             return [...state,payload]
         }
         case "UPDATE_TICKET":{
-            console.log(state)
             return {
                 ...state,
-                tickets: state.map(ticket =>
-                  ticket._id === payload._id ? { ...ticket, payload }
-                    : ticket
+                tickets: state.tickets.map(ticket =>
+                  ticket._id === payload._id ? { ...ticket, ...payload } : ticket
                 ),
               };
-        }
+            }
         case 'DELETE_TICKET':
             return {
               ...state,
@@ -80,7 +87,7 @@ function TicketReducer(state=JSON.parse(localStorage.getItem("my-tickets")) || [
 
 
 
-
+// selected menu
 function SelectedMenu(state="dashboard",action){
     const {type,payload}=action
 
@@ -96,7 +103,10 @@ function SelectedMenu(state="dashboard",action){
 }
 
     
-function NotesReducer(state=[],action){
+
+
+//all  notes GET/notes
+function NotesReducer(state=JSON.parse(localStorage.getItem("my-notes")) || [],action){
     const {type,payload}=action
 
     switch(type){
@@ -133,10 +143,76 @@ function NotesReducer(state=[],action){
 
 
 
+// particular ticket
+function ticketDetails(state=[],action){
+    const {type,payload}=action
+    switch(type){
+        case "SET_TICKET_DETAILS":{
+            return state=payload
+
+        }
+        case "REMOVE_TICKET_DETAILS":{
+            return state=[];
+
+        }
+        default: {
+            return state
+        }
+    }
+}
+
+
+
+
+// particular notes
+
+function notesDetail(state=[],action){
+const {type,payload}=action
+switch(type){
+    case "SET_NOTE_DETAILS":{
+        return state=payload
+
+    }
+    case "REMOVE_NOTE_DETAILS":{
+        return state=[];
+
+    }
+    default: {
+        return state
+    }
+}
+}
+// particular user(customer/agent)
+
+function userDetail(state=[],action){
+    const {type,payload}=action
+    switch(type){
+        case "SET_USER_DETAILS":{
+            return state=payload
+    
+        }
+        case "REMOVE_USER_DETAILS":{
+            return state=[];
+    
+        }
+        default: {
+            return state
+        }
+    }
+    }
+
+
+
+
+
 
 export const allReducers=combineReducers({
     SelectedMenu,
     TicketReducer,UserReducer,
     NotesReducer,
-    AllUsersReducer
+    AllUsersReducer,
+
+    ticketDetails,
+    notesDetail,
+    userDetail
 })

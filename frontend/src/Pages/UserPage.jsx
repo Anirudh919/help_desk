@@ -16,10 +16,12 @@ import { setTickets } from '../Store/Actions/ticketActions';
 const UserPage = () => {
 
   const selectedMenu=useSelector(state=>state.SelectedMenu)
+  
 const authUser=useSelector(state=>state.UserReducer)
 const tickets=useSelector(state=>state.TicketReducer)
 
 console.log(tickets)
+
 const openTickets=tickets?.filter((ticket)=>{
   if(ticket.status == "open")
   {
@@ -120,8 +122,12 @@ useEffect(()=>{
   </div>
 
       </div>
+
+
+
+
 {
-  selectedMenu =="dashboard"?<Admindashboard/>:
+  selectedMenu =="dashboard"? <Admindashboard/>:
   selectedMenu =="tickets"?<Tickets/>:
   selectedMenu =="customers"?<Customers/>:
    selectedMenu =="agents"? <Agents/>:""

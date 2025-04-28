@@ -16,7 +16,9 @@ export function useCreateTicket(){
     
     const navigate=useNavigate()
 
+
 const createTicket=async(payload)=>{
+    console.log(payload)
     
 
     setLoading(true)

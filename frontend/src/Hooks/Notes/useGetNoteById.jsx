@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 import {toast} from 'react-hot-toast'
-import { useDispatch } from "react-redux"
+// import { useDispatch } from "react-redux"
 import { setTickets } from "../../Store/Actions/ticketActions"
 import { setNotes } from "../../Store/Actions/notesActions"
 
@@ -11,9 +11,10 @@ export function useGetNoteById(){
 
     
     const [loading,setLoading]=useState(false)
+    const [note,setNote]=useState([])
     
     
-    const dispatch=useDispatch()  
+    // const dispatch=useDispatch()  
 
 const getNoteById=async(id)=>{
 
@@ -29,7 +30,7 @@ const getNoteById=async(id)=>{
         else
         {  
             // setTickets(myTickets);
-            dispatch(setNotes(note))
+            setNote(note)
             
             
             // localStorage.setItem("authInfo",JSON.stringify(user))
@@ -63,7 +64,7 @@ const getNoteById=async(id)=>{
 }
 
 
-return{getNoteById,loading}
+return{getNoteById,note,loading}
 
 
 

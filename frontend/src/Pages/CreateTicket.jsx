@@ -23,7 +23,7 @@ export default function CreateTicketForm(){
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createTicket({ ...formData, id: Date.now() })
+    createTicket(formData)
     
     
     // setFormData({ subject: '', description: '', category: '' ,pritority:''});

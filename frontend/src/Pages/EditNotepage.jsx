@@ -26,7 +26,7 @@ export default function EditNotepage(){
   const [isEditOpen,setIsEditOpen]=useState(false)
 
 
-const {getNoteById}=useGetNoteById()
+const {getNoteById,note}=useGetNoteById()
 
 
   const categories = ['Bug', 'Feature Request', 'Support', 'Other'];
@@ -45,9 +45,9 @@ const {getNoteById}=useGetNoteById()
 
     useEffect(()=>{
       getNoteById(id)
-    },[])
+    },[id])
 
-const note=useSelector(state=>state.NotesReducer)
+// const note=useSelector(state=>state.NotesReducer)
 console.log(note)
 
 

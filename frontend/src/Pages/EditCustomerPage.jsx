@@ -60,6 +60,8 @@ export default function CustomerDetailsPage({ onSubmit }) {
   const {id}=useParams()
 
   const {getUserById,user}=useGetUserbyId()
+
+
   const myTickets=useSelector(state=>state.TicketReducer)
 
   const {getMyTickets}=useGetMyTickets()

@@ -25,17 +25,18 @@ const auth=useSelector(state=>state.UserReducer)
 
   
 
-const {getMyNotes}=useGetMyNotes()
+const {getMyNotes,loading}=useGetMyNotes()
 
 useEffect(()=>{
   getMyNotes()
-},[])
+},[auth,notes])
 
 
 
 
   return (
     <div className=" bg-gray-900 min-h-screen w-full border-red-500  p-6 text-gray-300">
+      
       <div className="grid grid-cols-6 gap-6  ">
         {/* Sidebar */}
       
