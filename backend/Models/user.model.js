@@ -15,6 +15,16 @@ const userSchema=new mongoose.Schema({
         enum: ['customer', 'agent', 'admin'],
         default: 'customer',
       },
+      department: {
+        type: String,
+        default:""
+        
+      },
+      status:{
+        type:String,
+        enum:["active","inactive"],
+        default:"active",
+      },
       password: {
         type: String,
         required: true,

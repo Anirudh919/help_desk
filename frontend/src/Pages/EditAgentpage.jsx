@@ -6,19 +6,22 @@ import { useGetUserbyId } from "../Hooks/Customers/useGetUserById";
 import { useGetMyTickets } from "../Hooks/TicketsHooks/useGetMyTickets";
 import { useSelector } from "react-redux";
 import { useUpdateUserById } from "../Hooks/Customers/useUpdateUser";
+import { EditCustomerSkeleton } from "./EditCustomerPage";
 
 
 
 export default function EditAgentForm({ onSubmit })
  {
 
-  const {getUserById,user}=useGetUserbyId()
+  const {getUserById,user,loading}=useGetUserbyId()
+
+
   const [formData, setFormData] = useState({
-    name: user?.name|| "",
+    name: "",
     email: "",
     phone: "",
     department: "",
-    status: "active",
+    status: "",
     ticketsAssigned: 0,
     ticketsCompleted: 0,
     role:""
@@ -32,7 +35,7 @@ export default function EditAgentForm({ onSubmit })
 
   const myTickets=useSelector(state=>state.TicketReducer)
 
-  console.log(user)
+  
   
 
 
@@ -40,6 +43,28 @@ export default function EditAgentForm({ onSubmit })
     getMyTickets()
     getUserById(id)
   },[])
+
+
+
+
+
+  
+  useEffect(()=>{
+    if(user)
+      setFormData({
+        name: user.name || '',
+        email: user.email || '',
+        phone: user.phone || '',
+       
+        department: user.department || '',
+        status: user.status || '',
+        role: user.role || '',
+      });
+      
+    },[user])
+
+
+
 
   const handleChange = (e) => {
     setFormData({ 
@@ -57,7 +82,7 @@ export default function EditAgentForm({ onSubmit })
       email: "",
       phone: "",
       department: "",
-      status: "active",
+      status: "",
       ticketsAssigned: 0,
       ticketsCompleted: 0,
     });
@@ -67,118 +92,129 @@ export default function EditAgentForm({ onSubmit })
 
 
 
+{
+  loading? <EditCustomerSkeleton/>:
 
+  
+(<div className="min-h-screen bg-gray-900 p-6">
+  <header className="flex justify-between items-center mb-6">
+    <h1 className="text-2xl font-semibold">Agent Details</h1>
+  
+  </header>
 
-{/* left side */}
+  <div className="bg-gray-900 rounded-2xl shadow p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+    {/* Main Content */}
+    <div className="lg:col-span-2 space-y-6">
+      <div>
+        <h2 className="text-xl font-bold">{user?._id}</h2>
+        <div className="flex items-center gap-4 mt-2">
 
-<div className="min-h-screen bg-gray-900 p-6">
-        <header className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-semibold">Agent Details</h1>
-        
-        </header>
-  
-        <div className="bg-gray-900 rounded-2xl shadow p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-6">
-            <div>
-              <h2 className="text-xl font-bold">{user?._id}</h2>
-              <div className="flex items-center gap-4 mt-2">
-  
-                <img src="https://i.pravatar.cc/40?img=5" alt="Arlene McCoy" className="rounded-full" />
-                <span className="font-medium">{user?.name}</span>
-                <span className=" text-sm bg-gray-900 px-2 py-1 rounded-full capitalize">Role:<strong>{user?.role}</strong></span>
-  
-                <div className="  ml-auto flex items-center w-1/3 gap-3">
-           
-           <div className=" w-full"
-            onClick={()=>setIsEditOpen(!isEditOpen)}>
+          <img src="https://i.pravatar.cc/40?img=5" alt="Arlene McCoy" className="rounded-full" />
+          <span className="font-medium">{user?.name}</span>
+          <span className=" text-sm bg-gray-900 px-2 py-1 rounded-full capitalize">Role:<strong>{user?.role}</strong></span>
+
+          <div className="  ml-auto flex items-center w-1/3 gap-3">
+     
+     <div className=" w-full"
+      onClick={()=>setIsEditOpen(!isEditOpen)}>
 {isEditOpen? (
-  <button
-  className="w-full border px-10 rounded cursor-pointer hover:text-gray-300 mx-auto text-center">Cancel</button>
+<button
+className="w-full border px-10 rounded cursor-pointer hover:text-gray-300 mx-auto text-center">Cancel</button>
 ):(
-  <button  
-           className="w-full border  px-10 rounded cursor-pointer hover:text-gray-300 text-center">Edit</button>
+<button  
+     className="w-full border  px-10 rounded cursor-pointer hover:text-gray-300 text-center">Edit</button>
 )}
 
 
 
-           </div>
-         
-            <button className="w-full px-3 border text-red-600  rounded cursor-pointer hover:text-red-400">Delete</button>
-          </div>
-              </div>
-  
-  
-            
-  
-            </div>
-  
-            <div>
-              <h3 className="text-md font-semibold mb-2 text-emerald-500">Active</h3>
-              <p><strong>Active Since:</strong>{new Date(user?.updatedAt).toLocaleTimeString()}</p>
-              <p>{user?.email}</p>
-            </div>
-  
-            <div>
-              <h3 className="text-md font-semibold mb-2">Tickets History</h3>
-         
-  
-  <table className="w-full text-sm text-left">
-            <thead  className=''>
-              <tr className="">
-                <th># id</th>
-                <th>Date</th>
-                <th>Subject</th>
-                {/* <th>Service</th> */}
-                <th >Created By</th><th>Status</th>
-                
-              </tr>
-            </thead>
-            <tbody>
-              {myTickets.map((ticket, index) => (
-                <tr key={index} className="border-b  border-gray-800 h-10  ">
-                 
-                  <td>
-                      <Link to={`/admin/view-ticket/${ticket?._id}`} className="cursor-pointer text-blue-400 underline">{ticket?._id}</Link>
-                    </td>
-                  <td>{new Date(ticket?.createdAt).toLocaleTimeString()}</td>
-                  <td>{ticket?.subject}</td>
-                  
-                
-                  {/* <td>{ticket.service}</td> */}
-                  <td > {ticket?.createdBy?ticket?.createdBy : "###"} </td>
-                  
-                  <td className={`${ticket.status=="pending"?`text-red-500`:`${ticket.status=='open'?`text-blue-500`:`text-green-500`}`} capitalize`}>{ticket?.status}</td>
-                
-                </tr>
-              ))}
-            </tbody>
-          </table>
-             </div> 
-  
-           
-          
-  
-      
-  
-      </div>
-  
-      </div>
-      
-      
-      
-      
-      
-      
-      
-      
+     </div>
    
-        
+      <button className="w-full px-3 border text-red-600  rounded cursor-pointer hover:text-red-400">Delete</button>
+    </div>
+        </div>
+
+
       
-      
-      
-      
+
       </div>
+
+      <div>
+        <h3 className={
+          ` text-md font-semibold mb-2  capitalize ${
+            user?.status=="active"? `text-emerald-500`:`text-red-500`
+          }`
+        }
+        
+       >{user?.status}</h3>
+        <p><strong>Active Since:</strong>{new Date(user?.updatedAt).toLocaleTimeString()}</p>
+        <p>{user?.email}</p>
+      </div>
+
+      <div>
+        <h3 className="text-md font-semibold mb-2">Tickets History</h3>
+   
+
+<table className="w-full text-sm text-left">
+      <thead  className=''>
+        <tr className="">
+          <th># id</th>
+          <th>Date</th>
+          <th>Subject</th>
+          {/* <th>Service</th> */}
+          <th >Created By</th><th>Status</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        {myTickets.map((ticket, index) => (
+          <tr key={index} className="border-b  border-gray-800 h-10  ">
+           
+            <td>
+                <Link to={`/admin/view-ticket/${ticket?._id}`} className="cursor-pointer text-blue-400 underline">{ticket?._id}</Link>
+              </td>
+            <td>{new Date(ticket?.createdAt).toLocaleTimeString()}</td>
+            <td>{ticket?.subject}</td>
+            
+          
+            {/* <td>{ticket.service}</td> */}
+            <td > {ticket?.createdBy?ticket?.createdBy : "###"} </td>
+            
+            <td className={`${ticket.status=="pending"?`text-red-500`:`${ticket.status=='open'?`text-blue-500`:`text-green-500`}`} capitalize`}>{ticket?.status}</td>
+          
+          </tr>
+        ))}
+      </tbody>
+    </table>
+       </div> 
+
+     
+    
+
+
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+</div>)
+
+}
+
+{/* left side */}
+
 
 
 
@@ -306,31 +342,8 @@ export default function EditAgentForm({ onSubmit })
         </select>
       </div>
 
-      {/* <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium">Tickets Assigned</label>
-          <input
-            type="number"
-            name="ticketsAssigned"
-            value={formData.ticketsAssigned}
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border border-gray-400 rounded"
-            min={0}
-          />
-        </div> */}
 
-        {/* <div>
-          <label className="block text-sm font-medium">Tickets Completed</label>
-          <input
-            type="number"
-            name="ticketsCompleted"
-            value={formData.ticketsCompleted}
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border  border-gray-400rounded"
-            min={0}
-          />
-        </div>
-      </div> */}
+      
 
       <button 
       onClick={(e)=>handleSubmit(e)}

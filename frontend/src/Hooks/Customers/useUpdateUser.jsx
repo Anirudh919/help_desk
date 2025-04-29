@@ -20,6 +20,7 @@ export function useUpdateUserById(){
 const updateUserById=async(id,payload)=>{
     console.log(payload)
     
+    
 
     setLoading(true)
 
@@ -37,8 +38,8 @@ const updateUserById=async(id,payload)=>{
         else
         {   
             toast.success("User Updated Successfully")
-            dispatch(updateUser(updatedUser))
-            navigate("/")
+            // dispatch(updateUser(updatedUser))
+            // navigate("/")
             
             
             // localStorage.setItem("authInfo",JSON.stringify(user))

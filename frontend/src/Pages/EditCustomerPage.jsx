@@ -7,77 +7,41 @@ import { useGetMyTickets } from "../Hooks/TicketsHooks/useGetMyTickets";
 import { useSelector } from "react-redux";
 import { useUpdateUserById } from "../Hooks/Customers/useUpdateUser";
 
-const tickets = [
-  {
-    number: "INC4568",
-    date: "04/12/23",
-    subject: "Can't sign into finance app",
-    user: "Marcos.27",
-    location: "Building 7",
-    room: "402",
-    service: "Software",
-    assigned: null,
-    status: "pending",
-    update: "None",
-  },   {
-    number: "INC4568",
-    date: "04/12/23",
-    subject: "Can't sign into finance app",
-    user: "Marcos.27",
-    location: "Building 7",
-    room: "402",
-    service: "Software",
-    assigned: "Hazer",
-    status: "open",
-    update: "None",
-  },   {
-    number: "INC4568",
-    date: "04/12/23",
-    subject: "Can't sign into finance app",
-    user: "Marcos.27",
-    location: "Building 7",
-    room: "402",
-    service: "Software",
-    assigned: "Robert",
-    status: "closed",
-    update: "None",
-  },
-  // ... More ticket objects here
-];
 
 export default function CustomerDetailsPage({ onSubmit }) {
   const [formData, setFormData] = useState({
-    username: "",
+    name: "",
     email: "",
     phone: "",
-    department: "",
+    
     status: "",
-    
-    
     role:""
   });
   const [isEditOpen,setIsEditOpen]=useState(false)
   const {id}=useParams()
 
-  const {getUserById,user}=useGetUserbyId()
+  const {getUserById,user,loading}=useGetUserbyId()
+
+  
 
 
   const myTickets=useSelector(state=>state.TicketReducer)
 
   const {getMyTickets}=useGetMyTickets()
   const {updateUserById}=useUpdateUserById()
-  console.log(myTickets)
+
+  console.log(user)
 
   const handleChange = (e) => {
-    const { username, value } = e.target;
-    setFormData((prev) => ({ ...prev, [username]: value }));
+    
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     updateUserById(id,formData);
     setFormData({
-      username: "",
+      name: "",
       email: "",
       phone: "",
       
@@ -93,13 +57,40 @@ getUserById(id)
 getMyTickets()
   },[])
 
+
+
+  useEffect(()=>{
+if(user)
+  setFormData({
+    name: user.name || '',
+    email: user.email || '',
+    phone: user.phone || '',
+    createdBy: user.createdBy?._id || '',
+    department: user.department || '',
+    status: user.status || '',
+    role: user.role || '',
+
+
+  });
+
+  
+},[user])
+
+
+
+
+
+
+
   return (<div className="flex items-start justify-center ">
 
 
 
+{
+  loading ?<EditCustomerSkeleton/> :
 
-
-{/* left side */}
+  
+  (
 <AnimatePresence>
 <motion.div 
     initial={{ opacity: 0, x: 0 }}
@@ -202,7 +193,11 @@ className="min-h-screen bg-gray-900 p-6">
       </div>
       </motion.div>
 
-      </AnimatePresence>
+      </AnimatePresence>)
+
+}
+
+
 
 
  
@@ -212,9 +207,6 @@ className="min-h-screen bg-gray-900 p-6">
 
 
   <AnimatePresence>
-
-  
-
 {
   isEditOpen && (
     <motion.form
@@ -230,11 +222,11 @@ className="min-h-screen bg-gray-900 p-6">
 
 <div className="flex items-center justify-center gap-5 ">
 <div className=" w-1/2">
-        <label className="block text-sm font-medium ">Username </label>
+        <label className="block text-sm font-medium ">Name </label>
         <input
           type="text"
           name="name"
-          value={formData.username}
+          value={formData.name}
           onChange={handleChange}
           required
           className="mt-1 p-2 w-full border border-gray-400 rounded"
@@ -262,7 +254,7 @@ className="min-h-screen bg-gray-900 p-6">
           name="phone"
           value={formData.phone}
           onChange={handleChange}
-          required
+          
           className="mt-1 p-2 w-full border border-gray-400 rounded"
         />
       </div>
@@ -287,31 +279,8 @@ className="min-h-screen bg-gray-900 p-6">
         </select>
       </div>
 
-      {/* <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium">Tickets Assigned</label>
-          <input
-            type="number"
-            name="ticketsAssigned"
-            value={formData.ticketsAssigned}
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border border-gray-400 rounded"
-            min={0}
-          />
-        </div> */}
-
-        {/* <div>
-          <label className="block text-sm font-medium">Tickets Completed</label>
-          <input
-            type="number"
-            name="ticketsCompleted"
-            value={formData.ticketsCompleted}
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border  border-gray-400rounded"
-            min={0}
-          />
-        </div>
-      </div> */}
+    
+   
 
       <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 cursor-pointer">
         Save Changes
@@ -344,5 +313,46 @@ className="min-h-screen bg-gray-900 p-6">
 
 
 
+
+
+
+
+export const EditCustomerSkeleton = () => {
+  return (
+    <motion.form
+      initial={{ opacity: 0, x: 10 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 10 }}
+      transition={{ duration: 0.3, delay: 0.1, ease: 'easeInOut' }}
+      className="w-1/2  mx-auto bg-gray-900 p-6 rounded-xl shadow space-y-4 animate-pulse"
+    >
+      <h2 className="text-xl font-semibold text-center   bg-gray-700 h-6 w-1/3 mx-auto rounded" />
+
+      <div className="flex items-center justify-center gap-5">
+        <div className="w-1/2 ">
+          <div className="block text-sm font-medium bg-gray-700 h-4 w-1/3 mb-2 rounded" />
+          <div className="h-10 bg-gray-800 rounded" />
+        </div>
+
+        <div className="w-1/2">
+          <div className="block text-sm font-medium bg-gray-700 h-4 w-1/3 mb-2 rounded" />
+          <div className="h-10 bg-gray-800 rounded" />
+        </div>
+      </div>
+
+      <div>
+        <div className="block text-sm font-medium bg-gray-700 h-4 w-1/4 mb-2 rounded" />
+        <div className="h-10 bg-gray-800 rounded" />
+      </div>
+
+      <div>
+        <div className="block text-sm font-medium bg-gray-700 h-4 w-1/4 mb-2 rounded" />
+        <div className="h-10 bg-gray-800 rounded" />
+      </div>
+
+      <div className="h-10 bg-gray-700 rounded w-full mt-4" />
+    </motion.form>
+  );
+};
 
 

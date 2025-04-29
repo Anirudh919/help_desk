@@ -36,12 +36,12 @@ const createUser=async(payload)=>{
         let {user,success,message}=await res.json()
 
         
-        if(!user || !success) throw new Error(message);
+        if(!user) throw new Error(message);
         
         else
         {   
-            toast.success("Ticket created Successfully")
-            dispatch(addUser(user))
+            toast.success("Operation Success")
+            // dispatch(addUser(user))
             navigate("/")
             
             

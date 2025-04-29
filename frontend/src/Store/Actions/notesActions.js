@@ -13,7 +13,7 @@ export const addNotes=(payload)=>{
 }
 
 
-export const updateNote=(payload)=>{
+export const updateNoteAction=(payload)=>{
     return{
         type:"UPDATE_NOTE",payload
     }

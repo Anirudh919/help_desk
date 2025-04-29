@@ -1,8 +1,8 @@
 import { useState } from "react"
-import { updateNote } from "../../Store/Actions/notesActions"
+import { updateNoteAction } from "../../Store/Actions/notesActions"
 import {toast} from 'react-hot-toast'
 import { useDispatch } from "react-redux"
-import {addTicket, updateTicket} from '../../Store/Actions/ticketActions'
+
 import {useNavigate} from 'react-router-dom'
 // import { toast } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
@@ -36,7 +36,7 @@ const updateNote=async(id,payload)=>{
         else
         {   
             toast.success("Ticket Updated Successfully")
-            dispatch(updateNote(updatedNote))
+            dispatch(updateNoteAction(updatedNote))
             navigate("/")
             
             

@@ -33,7 +33,7 @@ const {updateMyTicket}=useUpdateTicket()
 
 
   const [formData, setFormData] = useState({
-    title: '',
+    subject: '',
     description: '',
     category: '',
     createdBy: '',
@@ -61,7 +61,7 @@ const {updateMyTicket}=useUpdateTicket()
    if (ticket) {
     
     setFormData({
-      title: ticket.subject || '',
+      subject: ticket.subject || '',
       description: ticket.description || '',
       category: ticket.category || '',
       createdBy: ticket.createdBy?._id || '',
@@ -81,7 +81,7 @@ const {updateMyTicket}=useUpdateTicket()
       delete cleanData.assignedTo;
     }
     updateMyTicket(id,cleanData);
-    setFormData({ title: '', description: '', category: '',priority:"",status:"" });
+    setFormData({ subject: '', description: '', category: '',priority:"",status:"" });
   };
 
   // setTimeout(()=>{
@@ -105,7 +105,7 @@ const {updateMyTicket}=useUpdateTicket()
       <h2 className="text-xl font-bold mb-4">Ticket Details</h2>
 
       <div className="mb-3">
-        <label className="block mb-1">Title</label>
+        <label className="block mb-1">subject</label>
         <p
          
           
@@ -223,11 +223,11 @@ className="w-1/2 mx-auto p-4 shadow rounded bg-gray-900">
   <h2 className="text-xl font-bold mb-4">Edit Ticket </h2>
 
   <div className="mb-3">
-    <label className="block mb-1">Title</label>
+    <label className="block mb-1">subject</label>
     <input
       type="text"
-      name="title"
-      value={formData.title}
+      name="subject"
+      value={formData.subject}
       onChange={handleChange}
       className="w-full border p-2 rounded border-gray-600"
       required
@@ -378,7 +378,7 @@ type="submit" className="w-full bg-blue-500 text-white py-2 rounded cursor-point
 export function TicketSkeleton() {
   return (
     <div className="w-1/2 mx-auto p-4 shadow rounded bg-gray-900 animate-pulse">
-      <div className="h-6 bg-gray-700 rounded mb-6 w-1/3"></div> {/* Title */}
+      <div className="h-6 bg-gray-700 rounded mb-6 w-1/3"></div> {/* subject */}
 
       {/* Skeleton fields */}
       {[...Array(7)].map((_, i) => (

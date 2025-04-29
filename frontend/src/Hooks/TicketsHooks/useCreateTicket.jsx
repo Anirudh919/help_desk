@@ -40,8 +40,6 @@ const createTicket=async(payload)=>{
             dispatch(addTicket(newTicket))
             navigate("/")
             
-            // localStorage.setItem("authInfo",JSON.stringify(user))
-            
         }
         
     } catch (error) {

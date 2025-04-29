@@ -47,6 +47,26 @@ const {getNoteById,note}=useGetNoteById()
       getNoteById(id)
     },[id])
 
+
+    useEffect(()=>{
+      if(note){
+        setFormData({
+          title:note.title || "",
+          
+          description: note.description || '',
+         
+          
+          
+          status: note.status || '',
+          
+        })
+      }
+
+    },[note])
+
+
+
+
 // const note=useSelector(state=>state.NotesReducer)
 console.log(note)
 

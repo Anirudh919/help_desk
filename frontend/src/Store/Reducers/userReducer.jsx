@@ -45,6 +45,14 @@ function AllUsersReducer(state=[],action){
         case "SET_All_USERS":{
             return state=payload
         }
+        case "UPDATE_USER":{
+
+            const oldUsers=state
+            const newUsers=oldUsers.filter(user=>user?._id !=payload?._id)
+            state=[...newUsers,payload]
+            return state
+
+            }
         default:{
             return state
         }
@@ -65,12 +73,12 @@ function TicketReducer(state= [],action){
             return [...state,payload]
         }
         case "UPDATE_TICKET":{
-            return {
-                ...state,
-                tickets: state.tickets.map(ticket =>
-                  ticket._id === payload._id ? { ...ticket, ...payload } : ticket
-                ),
-              };
+
+            const oldTickets=state
+            const newTickets=oldTickets.filter(ticket=>ticket?._id !=payload?._id)
+            state=[...newTickets,payload]
+            return state
+
             }
         case 'DELETE_TICKET':
             return {
@@ -117,14 +125,11 @@ function NotesReducer(state=JSON.parse(localStorage.getItem("my-notes")) || [],a
             return [...state,payload]
         }
        case "UPDATE_NOTE":{
-            return {
-                ...state,
-                notes: state.notes.map(note =>
-                  note.id === payload._id
-                    ? { ...note, ...payload.data }
-                    : note
-                ),
-              };
+        const oldNotes=state
+        const newNotes=oldNotes.filter(note=>note?._id !=payload?._id)
+        state=[...newNotes,payload]
+        return state
+
         }
         case 'DELETE_NOTE':
 

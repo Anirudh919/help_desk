@@ -16,7 +16,7 @@ export const setAllUsers=(payload)=>{
     }
 }
 
-export const updateUser=()=>{
+export const updateUser=(payload)=>{
     return{
         type:"UPDATE_USER",payload
     }

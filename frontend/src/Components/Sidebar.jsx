@@ -54,8 +54,8 @@ export default function Sidebar(){
                 <nav className="mt-8  flex-grow">
                     
 
-{SIDEBAR_ITEMS.filter(item => item?.roles?.includes(authUser?.role)).map((item, index) => 
-
+{SIDEBAR_ITEMS.map((item, index) => 
+// .filter(item => item?.roles?.includes(authUser?.role)).
 
 
                                 ( <motion.div className={`  flex items-center cursor-pointer p-2  border-red-500 text-sm font-medium 
