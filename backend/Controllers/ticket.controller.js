@@ -4,7 +4,7 @@
 import  {Ticket} from '../Models/ticket.model.js'
 export async function createTicket(req, res) {    
     try {
-        const { subject, description, status,category,priority } = req.body;
+        const { subject="", description="", status="",category="",priority="" } = req.body;
         const user=req.user
         
         if (!subject || !description || !category ) {
