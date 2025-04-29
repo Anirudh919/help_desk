@@ -38,7 +38,7 @@ const updateMyTicket=async(id,payload)=>{
         else
         {   
             toast.success(message)
-            dispatch(updateTicket(updatedTicket))
+            // dispatch(updateTicket(updatedTicket))
             navigate("/")
             
             // localStorage.setItem("authInfo",JSON.stringify(user))

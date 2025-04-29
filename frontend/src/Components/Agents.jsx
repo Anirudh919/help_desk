@@ -8,12 +8,13 @@ import {useSelector} from 'react-redux'
 import { useGetAllUsers } from '../Hooks/Customers/useGetAllUsers';
 import { useEffect } from 'react';
 import { useGetMyTickets } from '../Hooks/TicketsHooks/useGetMyTickets';
+import { useGetAllTickets } from '../Hooks/TicketsHooks/useGetAllTickets';
 
 
 const Agents = () => {
-
+const {getAllTickets}=useGetAllTickets()
       const allUsers=useSelector(state=>state.AllUsersReducer)
-      
+      const authUser=useSelector(state=>state.UserReducer)
       const tickets=useSelector(state=>state.TicketReducer)
       const completedTickets=tickets.filter((ticket)=>{
         if(ticket.status=="closed")
@@ -33,7 +34,11 @@ const Agents = () => {
 
         useEffect(()=>{
           getAllUsers()
-          getMyTickets()
+          if(authUser.role=="customer"){
+            getMyTickets()
+           }
+          
+           getAllTickets()
         },[])
 
   

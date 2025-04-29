@@ -3,15 +3,16 @@
 
 import  {Ticket} from '../Models/ticket.model.js'
 export async function createTicket(req, res) {    
+  console.log("reoute hit")
     try {
-        const { subject="", description="", status="",category="",priority="" } = req.body;
+        const { subject ,description,category,priority} = req.body;
         const user=req.user
         
         if (!subject || !description || !category ) {
             return res.status(400).json({ message: "Please provide all required fields." });
         }
 
-        const newTicket = await Ticket.create( { subject, description, status,priority,createdBy:user?._id.toString(),category });
+        const newTicket = await Ticket.create({subject,description,priority,createdBy:user?._id.toString(),category});
 
         res.status(201).json({
             success: true,
@@ -31,7 +32,7 @@ export async function createTicket(req, res) {
 
 export async function getAllTickets(req, res) {
     try {
-        const tickets = await Ticket.find({});
+        const tickets = await Ticket.find({}).populate('createdBy', 'name');
         res.status(200).json({
             success: true,
             message: "Tickets fetched successfully",

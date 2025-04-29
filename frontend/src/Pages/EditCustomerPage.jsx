@@ -13,7 +13,6 @@ export default function CustomerDetailsPage({ onSubmit }) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: "",
     
     status: "",
     role:""
@@ -254,19 +253,6 @@ className="min-h-screen bg-gray-900 p-6">
       </div>
 
       </div>
-
-      <div>
-        <label className="block text-sm font-medium">Phone</label>
-        <input
-          type="tel"
-          name="phone"
-          value={formData.phone}
-          onChange={handleChange}
-          
-          className="mt-1 p-2 w-full border border-gray-400 rounded"
-        />
-      </div>
-
  
 
      

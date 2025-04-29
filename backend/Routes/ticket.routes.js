@@ -15,17 +15,13 @@ import {
 } from '../Controllers/ticket.controller.js'
 
 
-ticketRouter.get('/', validateUser, getAllTickets); // all for admin, only own for user
+ticketRouter.get('/', validateUser, getAllTickets); 
 ticketRouter.get('/my-tickets',validateUser, getMyTickets);
-
-
+ticketRouter.post("/create",validateUser,createTicket)
 
 ticketRouter.get('/:id', validateUser, getTicketById);
 
 ticketRouter.delete("/:id",validateUser,deleteTicketById)
-
-
-ticketRouter.post("/create",validateUser,createTicket)
 
 ticketRouter.put("/update/:id",validateUser,updateTicket)
 

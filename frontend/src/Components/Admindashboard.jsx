@@ -7,13 +7,6 @@ import { useGetMyNotes } from "../Hooks/Notes/useGetNotes";
 
 
 
-
-const data = [
-  { name: "Desktops", stock: 60 },
-  { name: "Laptops", stock: 40 },
-  { name: "Tablets", stock: 25 },
-];
-
 export default function Admindashboard() {
 
 const tickets=useSelector(state=>state.TicketReducer)
@@ -25,11 +18,11 @@ const auth=useSelector(state=>state.UserReducer)
 
   
 
-const {getMyNotes,loading}=useGetMyNotes()
+const {getMyNotes}=useGetMyNotes()
 
 useEffect(()=>{
   getMyNotes()
-},[auth,])
+},[auth])
 
 
 
@@ -82,7 +75,7 @@ useEffect(()=>{
                       
                           <td>{new Date(ticket?.createdAt)?.toLocaleTimeString()}</td>
                           <td>{ticket?.subject}</td>
-                          <td>{ticket.createdBy}</td>
+                          <td>{ticket.createdBy?.name||'-'}</td>
                           <td>{ticket.status}</td>
                           <td><span className="bg-green-100 text-green-700 px-2 py-1 rounded">{new Date(ticket?.updatedAt)?.toLocaleTimeString()}</span></td>
                         </tr>
@@ -98,46 +91,55 @@ useEffect(()=>{
               </div>
             </div>
 
-            <div className="border-l border-t border-gray-600">
-              <div>
-                <div className="font-semibold text-lg mb-2 pl-2">Unassigned Tickets</div>
-                {/* 3 */}
-                
+
+
+
+
+{!auth?.role=="customer" && 
+(
+
+  <div className="border-l border-t border-gray-600">
+  <div>
+    <div className="font-semibold text-lg mb-2 pl-2">Unassigned Tickets</div>
+    {/* 3 */}
+    
 
 {tickets?.map((ticket)=>{
-  if(ticket?.assignedTo ==null){
-    return (
-      <div className="text-sm space-y-2  px-2">
-                  <div className="flex justify-between items-center">
-                   
-                    <div >
-                     <Link to={`/admin/view-ticket/${ticket?._id}`} className="cursor-pointer text-blue-400 underline">
-                  <td>{ticket?._id}</td>
-                  </Link>
-                      <div className="text-xs text-gray-500">{ticket?.subject}</div>
-                    </div>
+if(ticket?.assignedTo ==null){
+return (
+<div className="text-sm space-y-2  px-2">
+      <div className="flex justify-between items-center">
+       
+        <div >
+         <Link to={`/admin/view-ticket/${ticket?._id}`} className="cursor-pointer text-blue-400 underline">
+      <td>{ticket?._id}</td>
+      </Link>
+          <div className="text-xs text-gray-500">{ticket?.subject}</div>
+        </div>
 
 
-                    <div>
-                      <div className="font-medium">Date created At:</div>
-                      <div className="text-xs text-gray-500"> {new Date(ticket?.createdAt).toLocaleTimeString()}</div>
-                    </div>
+        <div>
+          <div className="font-medium">Date created At:</div>
+          <div className="text-xs text-gray-500"> {new Date(ticket?.createdAt).toLocaleTimeString()}</div>
+        </div>
 
-                    {/* <select className="border border-gray-600 bg-gray-900  rounded px-2 py-1 text-sm">
-                      <option>Select Technician</option>
-                      <option>Levinson.2</option>
-                    </select> */}
-                  </div>
-                </div>
+        {/* <select className="border border-gray-600 bg-gray-900  rounded px-2 py-1 text-sm">
+          <option>Select Technician</option>
+          <option>Levinson.2</option>
+        </select> */}
+      </div>
+    </div>
 
-    )
-  }
+)
+}
 
 })}
 
-                
-              </div>
-            </div>
+    
+  </div>
+</div>
+)
+}
           </div>
 
 

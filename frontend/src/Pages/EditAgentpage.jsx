@@ -25,7 +25,6 @@ export default function EditAgentForm({ onSubmit })
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: "",
     department: "",
     status: "",
     ticketsAssigned: 0,
@@ -277,18 +276,6 @@ className="w-full border px-10 rounded cursor-pointer hover:text-gray-300 mx-aut
         />
       </div>
 
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium">Phone</label>
-        <input
-          type="tel"
-          name="phone"
-          value={formData.phone}
-          onChange={handleChange}
-          required
-          className="mt-1 p-2 w-full border border-gray-400 rounded"
-        />
       </div>
 
  

@@ -18,7 +18,6 @@ export function useCreateTicket(){
 
 
 const createTicket=async(payload)=>{
-    console.log(payload)
     
 
     setLoading(true)

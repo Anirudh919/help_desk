@@ -23,6 +23,7 @@ const authUser=useSelector(state=>state.UserReducer)
 const tickets=useSelector(state=>state.TicketReducer)
 const {getAllTickets}=useGetAllTickets()
 
+console.log(tickets)
 
 const openTickets=tickets?.filter((ticket)=>{
   if(ticket.status == "open")
@@ -60,10 +61,14 @@ useEffect(()=>{
    if(authUser.role=="customer"){
     getMyTickets()
    }
-  
-   getAllTickets()
+  else if(
+    authUser.role== "admin" || authUser.role =="agent"
+  ){
+    getAllTickets()
+  }
+   
   // dispatch(setTickets(tickets))
-},[authUser])
+},[])
   
 
 

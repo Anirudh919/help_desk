@@ -14,6 +14,7 @@ export default function EditTicketpage(){
 
   
   const {id}=useParams()
+  const authUser=useSelector(state=>state.UserReducer)
   
 
   const [isEditOpen,setIsEditOpen]=useState(false)
@@ -143,16 +144,24 @@ const {updateMyTicket}=useUpdateTicket()
          {ticket?.status}</p>
       </div>
 
-      <div className="mb-3">
-        <label className="block mb-1">Assigned To:</label>
-        <p
-         
-          
-          className="w-full border-b cursor-not-allowed border-gray-600 p-2 rounded"
-          
-        >
-          {ticket?.assignedTo ? ticket?.assignedTo : "###"}</p>
-      </div>
+
+      {
+        !authUser?.role=="customer" &&
+        (
+          <div className="mb-3">
+          <label className="block mb-1">Assigned To:</label>
+          <p
+           
+            
+            className="w-full border-b cursor-not-allowed border-gray-600 p-2 rounded"
+            
+          >
+            {ticket?.assignedTo ? ticket?.assignedTo : "###"}</p>
+        </div>
+        )
+      }
+
+   
 
 
 
@@ -261,24 +270,29 @@ className="w-1/2 mx-auto p-4 shadow rounded bg-gray-900">
         </select>
       </div>
 
+
+
+
+{!authUser?.role=="customer" &&
+(
   <div className="mb-3">
-    <label className="block mb-1">Assigned To:</label>
-    <select
-      name="assignedTo"
-      value={formData?.assignedTo || ""}
-      onChange={handleChange}
-      className="w-full border p-2 rounded border-gray-600 bg-gray-900"
-      required
-    >
- <option value="">Select Agent</option>
-      {
-        agents.map(agent=>(
-          <option value={agent?._id} key={agent?._id}>
-            {agent?.name}
-          </option>
-        ))
-      }
-    
+  <label className="block mb-1">Assigned To:</label>
+  <select
+    name="assignedTo"
+    value={formData?.assignedTo || ""}
+    onChange={handleChange}
+    className="w-full border p-2 rounded border-gray-600 bg-gray-900"
+    required
+  >
+<option value="">Select Agent</option>
+    {
+      agents.map(agent=>(
+        <option value={agent?._id} key={agent?._id}>
+          {agent?.name}
+        </option>
+      ))
+    }
+  
 
 
 
@@ -287,8 +301,10 @@ className="w-1/2 mx-auto p-4 shadow rounded bg-gray-900">
 
 
 
-      </select>
-  </div>
+    </select>
+</div>
+)}
+ 
 
 
 

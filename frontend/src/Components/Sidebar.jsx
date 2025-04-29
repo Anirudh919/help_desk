@@ -2,7 +2,7 @@ import { useState } from "react"
 import { SIDEBAR_ITEMS } from "../Constants"
 import { AnimatePresence, motion } from "framer-motion"
 import { BiMenu } from "react-icons/bi"
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { CiLogin, CiLogout } from "react-icons/ci";
 import { useSelector, useDispatch } from 'react-redux';
 import { setMenu } from "../Store/Actions/menuItemsActions"
@@ -19,6 +19,7 @@ export default function Sidebar(){
     const authUser=useSelector(state=>state.UserReducer)
     const isAdmin=authUser?.role=="admin"
     const isAgent=authUser?.role=="agent"
+    const navigate=useNavigate()
 
     console.log(isAdmin,isAgent)
 
@@ -60,7 +61,7 @@ export default function Sidebar(){
 
                                 ( <motion.div className={`  flex items-center cursor-pointer p-2  border-red-500 text-sm font-medium 
                                      rounded-lg hover:bg-gray-700  transition-colors mb-2 ${selected == item.link? `bg-gray-900`:``}`}
-                                     onClick={()=>dispatch(setMenu(item.link))}
+                                     onClick={()=>{navigate("/");dispatch(setMenu(item.link))}}
                                      >
              
                                              <span style={{color:item.color,minWidth:'20px',fontSize:"22px",}}>{item.icon}  </span>

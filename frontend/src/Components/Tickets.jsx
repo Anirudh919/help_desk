@@ -54,7 +54,7 @@ const Tickets = () => {
                 <td>{new Date(ticket.createdAt).toLocaleTimeString()}</td>
                 <td>{ticket.subject}</td>
                 <td>{ticket.
-createdBy
+createdBy?.name||'-'
 }</td>
               
                 {/* <td>{ticket.service}</td> */}

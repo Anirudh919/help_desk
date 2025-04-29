@@ -1,12 +1,10 @@
 
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useCreateTicket } from '../Hooks/TicketsHooks/useCreateTicket';
 // import { createTicket } from '../redux/actions';
 
 
 export default function CreateTicketForm(){
-  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     subject: '',
     description: '',
