@@ -57,7 +57,10 @@ const {getMyTickets}=useGetMyTickets()
 
 
 useEffect(()=>{
-   getMyTickets()
+   if(authUser.role=="customer"){
+    getMyTickets()
+   }
+  
    getAllTickets()
   // dispatch(setTickets(tickets))
 },[authUser])
