@@ -98,46 +98,6 @@ export async function getTicketById(req, res) {
     }
 }           
 
-// export async function bookRoom(req,res){
-//     try {
-//         const { id } = req.params;
-//         const user=req.user
-
-
-//         const room = await Room.findOne({ _id: id });
-
-//         if (!room) {
-//             return res.status(404).json({
-//                 success: false,
-//                 message: "Room not found",
-//             });
-//         }
-
-//         if (!room.roomAvailability) {
-//             return res.status(400).json({
-//                 success: false,
-//                 message: "Room is already booked",
-//             });
-//         }
-
-//         room.roomAvailability = false;
-//         room.bookedBy = user?._id; 
-//         await room.save();
-
-//         res.status(200).json({
-//             success: true,
-//             message: "Room booked successfully",
-//             room,
-//         });
-//     } catch (error) {
-//         res.status(500).json({
-//             success: false,
-//             message: "Internal server error",
-//             error: error.message,
-//         });
-//     }
-// }
-
 
 export async function updateTicket(req,res){
 

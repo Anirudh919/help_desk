@@ -11,6 +11,8 @@ import Agents from '../Components/Agents';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetMyTickets } from '../Hooks/TicketsHooks/useGetMyTickets';
 import { setTickets } from '../Store/Actions/ticketActions';
+import { useGetAllUsers } from '../Hooks/Customers/useGetAllUsers';
+import { useGetAllTickets } from '../Hooks/TicketsHooks/useGetAllTickets';
 
 
 const UserPage = () => {
@@ -19,8 +21,8 @@ const UserPage = () => {
   
 const authUser=useSelector(state=>state.UserReducer)
 const tickets=useSelector(state=>state.TicketReducer)
+const {getAllTickets}=useGetAllTickets()
 
-console.log(tickets)
 
 const openTickets=tickets?.filter((ticket)=>{
   if(ticket.status == "open")
@@ -52,8 +54,11 @@ const {getMyTickets}=useGetMyTickets()
 
 
 
+
+
 useEffect(()=>{
    getMyTickets()
+   getAllTickets()
   // dispatch(setTickets(tickets))
 },[authUser])
   

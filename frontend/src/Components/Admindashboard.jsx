@@ -29,7 +29,7 @@ const {getMyNotes,loading}=useGetMyNotes()
 
 useEffect(()=>{
   getMyNotes()
-},[auth,notes])
+},[auth,])
 
 
 

@@ -5,50 +5,10 @@ import { useSelector } from 'react-redux';
 
 
 const Tickets = () => {
-    const tickets = [
-      {
-        number: "INC4568",
-        date: "04/12/23",
-        subject: "Can't sign into finance app",
-        user: "Marcos.27",
-        location: "Building 7",
-        room: "402",
-        service: "Software",
-        assigned: null,
-        status: "pending",
-        update: "None",
-      },   {
-        number: "INC4568",
-        date: "04/12/23",
-        subject: "Can't sign into finance app",
-        user: "Marcos.27",
-        location: "Building 7",
-        room: "402",
-        service: "Software",
-        assigned: "Hazer",
-        status: "open",
-        update: "None",
-      },   {
-        number: "INC4568",
-        date: "04/12/23",
-        subject: "Can't sign into finance app",
-        user: "Marcos.27",
-        location: "Building 7",
-        room: "402",
-        service: "Software",
-        assigned: "Robert",
-        status: "closed",
-        update: "None",
-      },
-      // ... More ticket objects here
-    ];
+ 
   const myTickets=useSelector(state=>state.TicketReducer)
-  console.log(myTickets)
-    const getStatusColor = (status) => {
-      if (status === "None" || status === "2 days") return "bg-red-100 text-red-600";
-      if (status.includes("day")) return "bg-yellow-100 text-yellow-600";
-      return "bg-green-100 text-green-600";
-    };
+  
+  
   
     return (
       <div className="bg-gray-900 p-4 rounded shadow-md overflow-auto">

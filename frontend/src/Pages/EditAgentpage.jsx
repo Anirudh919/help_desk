@@ -7,13 +7,19 @@ import { useGetMyTickets } from "../Hooks/TicketsHooks/useGetMyTickets";
 import { useSelector } from "react-redux";
 import { useUpdateUserById } from "../Hooks/Customers/useUpdateUser";
 import { EditCustomerSkeleton } from "./EditCustomerPage";
+import { useDeleteUserById } from "../Hooks/Customers/useDeleteUserById";
 
 
 
 export default function EditAgentForm({ onSubmit })
  {
 
+  const {id}=useParams()
   const {getUserById,user,loading}=useGetUserbyId()
+  const {getMyTickets}=useGetMyTickets()
+  const {updateUserById}=useUpdateUserById()
+  const myTickets=useSelector(state=>state.TicketReducer)
+  const {deleteUserById,}=useDeleteUserById()
 
 
   const [formData, setFormData] = useState({
@@ -27,13 +33,10 @@ export default function EditAgentForm({ onSubmit })
     role:""
   });
   const [isEditOpen,setIsEditOpen]=useState(false)
-  const {id}=useParams()
+  
 
   
-  const {getMyTickets}=useGetMyTickets()
-  const {updateUserById}=useUpdateUserById()
 
-  const myTickets=useSelector(state=>state.TicketReducer)
 
   
   
@@ -129,7 +132,14 @@ className="w-full border px-10 rounded cursor-pointer hover:text-gray-300 mx-aut
 
      </div>
    
-      <button className="w-full px-3 border text-red-600  rounded cursor-pointer hover:text-red-400">Delete</button>
+      <button className="w-full px-3 border text-red-600  rounded cursor-pointer hover:text-red-400"
+      onClick={()=>{
+        if(confirm("Are You Sure")){
+          deleteUserById(id)
+        }
+        
+      }}
+      >Delete</button>
     </div>
         </div>
 

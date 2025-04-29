@@ -38,10 +38,10 @@ function App() {
 <Route path='/login' element={authUser?<Navigate to="/"/>:<Login/>}/> 
 <Route path='/signup' element={authUser?<Navigate to="/"/>:<Signup/>}/>
 
-<Route path="/admin" element={(authUser && authUser.role=='admin')?<Adminpage/>:<Navigate to="/"/>}/>{/*home*/}
+{/* <Route path="/admin" element={(authUser && authUser.role=='admin')?<Adminpage/>:<Navigate to="/"/>}/>home */}
 
 
-<Route path={`/`} element={authUser && authUser?.role=='customer'?<UserPage/>:<Navigate to="/login"/>}/>{/*home*/}
+<Route path={`/`} element={authUser? <UserPage/>:<Navigate to="/login"/>}/>{/*home*/}
 
 <Route path="/view-agent" element={<ViewAgent/>}/>{/*home*/}
 

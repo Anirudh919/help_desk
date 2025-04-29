@@ -2,43 +2,43 @@ import { useState } from "react"
 
 import {toast} from 'react-hot-toast'
 import { useDispatch } from "react-redux"
-import {addTicket, updateTicket} from '../../Store/Actions/ticketActions'
-import { updateUser } from "../../Store/Actions/userActions"
-import {useNavigate} from 'react-router-dom'
+import { deleteTicket, setTickets } from "../../Store/Actions/ticketActions"
+import { useNavigate } from "react-router-dom"
+
+
 // import { toast } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
-export function useUpdateUserById(){
+export function useDeleteUserById(){
 
     
     const [loading,setLoading]=useState(false)
+    // const [tickets,setTickets]=useState([])
     
-    const dispatch=useDispatch()
-    const navigate=useNavigate()
-    
-    
+    const dispatch=useDispatch() 
+    const navigate=useNavigate() 
 
-const updateUserById=async(id,payload)=>{
-    console.log(payload)
-    
-    
+const deleteUserById=async(id)=>{
+
+  
 
     setLoading(true)
 
     try {
-        const res=await fetch(`/api/auth/users/update/${id}`,{
-            method:"PUT",
+        const res=await fetch(`http://localhost:5000/api/auth/users/delete/${id}`,{
+            method:"DELETE",
             headers:{
                 "Content-Type":"application/json"
-            },
-            body:JSON.stringify(payload)
+            }
         })
-        let {updatedUser,success,message}=await res.json()
-        if(!updatedUser || !success) throw new Error(message);
+        
+        let {deletedUser,success,message,error}=await res.json()
+        if(!deletedUser || !success) throw new Error(error);
         
         else
-        {   
-            toast.success("User Updated Successfully")
-            // dispatch(updateUser(updatedUser))
+        {  
+            // setTickets(myTickets);
+            // dispatch(deleteTicket(payload))
+            toast.success(message)
             navigate("/")
             
             
@@ -73,7 +73,7 @@ const updateUserById=async(id,payload)=>{
 }
 
 
-return{updateUserById,loading}
+return{deleteUserById,loading}
 
 
 

@@ -9,53 +9,6 @@ import { useEffect } from 'react';
 
 
 const Customers = () => {
-  //  const customers= [
-  //       {
-  //         "id": "1",
-  //         "name": "Alice Johnson",
-  //         "email": "alice.johnson@example.com",
-  //         "username": "alicej",
-  //         "password": "hashedpassword123",
-  //         "role": "customer",
-  //         "createdAt": "2024-04-01T10:20:30Z"
-  //       },
-  //       {
-  //         "id": "2",
-  //         "name": "Bob Smith",
-  //         "email": "bob.smith@example.com",
-  //         "username": "bob_smith",
-  //         "password": "hashedpassword123",
-  //         "role": "customer_service_agent",
-  //         "createdAt": "2024-04-02T12:45:00Z"
-  //       },
-  //       {
-  //         "id": "3",
-  //         "name": "Charlie Green",
-  //         "email": "charlie.green@example.com",
-  //         "username": "charlieg",
-  //         "password": "hashedpassword123",
-  //         "role": "admin",
-  //         "createdAt": "2024-04-03T08:15:10Z"
-  //       },
-  //       {
-  //         "id": "4",
-  //         "name": "Dana Lee",
-  //         "email": "dana.lee@example.com",
-  //         "username": "dlee",
-  //         "password": "hashedpassword123",
-  //         "role": "customer",
-  //         "createdAt": "2024-04-04T14:30:00Z"
-  //       },
-  //       {
-  //         "id": "5",
-  //         "name": "Ethan Wright",
-  //         "email": "ethan.wright@example.com",
-  //         "username": "ethanw",
-  //         "password": "hashedpassword123",
-  //         "role": "customer_service_agent",
-  //         "createdAt": "2024-04-05T11:00:00Z"
-  //       }
-  //     ]
 
       const {getAllUsers}=useGetAllUsers()
 
@@ -72,11 +25,7 @@ const Customers = () => {
 
       })
   
-    const getStatusColor = (status) => {
-      if (status === "None" || status === "2 days") return "bg-red-100 text-red-600";
-      if (status.includes("day")) return "bg-yellow-100 text-yellow-600";
-      return "bg-green-100 text-green-600";
-    };
+ 
   
     return (
       <div className="bg-gray-900 p-4 rounded shadow-md overflow-auto">
@@ -109,7 +58,7 @@ const Customers = () => {
               
             </tr>
           </thead>
-          <tbody>
+          <tbody className=' overflow-auto '>
             {customers.map((customer, index) => (
 
                 

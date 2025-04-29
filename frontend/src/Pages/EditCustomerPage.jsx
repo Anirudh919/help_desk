@@ -6,6 +6,7 @@ import { useGetUserbyId } from "../Hooks/Customers/useGetUserById";
 import { useGetMyTickets } from "../Hooks/TicketsHooks/useGetMyTickets";
 import { useSelector } from "react-redux";
 import { useUpdateUserById } from "../Hooks/Customers/useUpdateUser";
+import { useDeleteUserById } from "../Hooks/Customers/useDeleteUserById";
 
 
 export default function CustomerDetailsPage({ onSubmit }) {
@@ -29,8 +30,9 @@ export default function CustomerDetailsPage({ onSubmit }) {
 
   const {getMyTickets}=useGetMyTickets()
   const {updateUserById}=useUpdateUserById()
+  const {deleteUserById,}=useDeleteUserById()
 
-  console.log(user)
+  
 
   const handleChange = (e) => {
     
@@ -131,7 +133,13 @@ className="min-h-screen bg-gray-900 p-6">
 
            </div>
          
-            <button className="w-full px-3 border text-red-600  rounded cursor-pointer hover:text-red-400">Delete</button>
+            <button 
+            onClick={()=>{
+              if(confirm("Are You Sure")){
+                deleteUserById(id)
+              }}}
+            
+            className="w-full px-3 border text-red-600  rounded cursor-pointer hover:text-red-400">Delete</button>
           </div>
               </div>
   

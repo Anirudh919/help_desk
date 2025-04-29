@@ -10,6 +10,7 @@ import { createNotes, deleteNoteById, getMyNotes, getNoteById, updateNote } from
 export const notesRouter = express.Router();
 
 notesRouter.post('/create-notes', validateUser, createNotes); // all for admin, only own for user
+
 notesRouter.get('/my-notes',validateUser, getMyNotes);
 
 notesRouter.get('/:id', validateUser, getNoteById);
