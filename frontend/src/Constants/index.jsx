@@ -40,7 +40,7 @@ export const SIDEBAR_ITEMS = [
         roles: ["admin"]
     },
     {
-        name: "Knowledge Base",
+        name: "Knowledge Base", 
         icon: <IoBookSharp />,
         color: '#f59e0b',
         link: 'knowledgebase'
@@ -84,12 +84,14 @@ export const SALES_DATA = [
     },
     {
         name: "Dec", sales: 7200
-    }, {
+    }, 
+    {
         name: "Jan", sales: 6100
     },
     {
         name: "Feb", sales: 5980
-    }, {
+    },
+    {
         name: "Mar", sales: 6880
     },
     {

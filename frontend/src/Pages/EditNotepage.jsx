@@ -303,21 +303,6 @@ console.log(note)
       </div>
 
 
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
 <button 
 onClick={(e)=>handleSubmit(e)}
 type="submit" className="w-full bg-blue-500 text-white py-2 rounded cursor-pointer">

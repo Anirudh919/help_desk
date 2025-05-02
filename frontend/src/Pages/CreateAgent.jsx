@@ -89,10 +89,6 @@ const CreateAgent = () => {
         </select>
       </div>
 
-
-
-
-
       {/* Optional: Display Role */}
       <div>
         <label className="block mb-1 text-sm font-medium">Role</label>
