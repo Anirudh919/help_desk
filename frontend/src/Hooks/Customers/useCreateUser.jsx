@@ -1,20 +1,20 @@
 import { useState } from "react"
 
 import {toast} from 'react-hot-toast'
-import { useDispatch } from "react-redux"
-import {addTicket} from '../../Store/Actions/ticketActions'
-import { addUser } from "../../Store/Actions/userActions"
-import {useNavigate} from 'react-router-dom'
+import {  useDispatch } from 'react-redux';
+import { addUser } from "../../Store/Actions/userActions";
+import { useNavigate } from "react-router-dom";
+// import {useNavigate} from 'react-router-dom'
 
 // import { toast } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
 export function useCreateUsert(){
 
     
-    const [loading,setLoading]=useState(false)
-    // const [notes,setNotes]=useState(null)
     const dispatch=useDispatch()
     const navigate=useNavigate()
+    const [loading,setLoading]=useState(false)
+  
     
     
 
@@ -32,31 +32,34 @@ const createUser=async(payload)=>{
             body:JSON.stringify(payload)
 
         })
-        let {user,success,error}=await res.json()
-
+        // let {user,error,message}=await res.json()
+    let resp=await res.json()
+    if(resp?.status){
+        toast.success(resp.message)
         
-        if(!user) throw new Error(error);
-        
-        else
-        {   
-            toast.success("Operation Success")
-            // dispatch(addUser(user))
+            dispatch(addUser(resp?.user))
             navigate("/")
             
             
-            // localStorage.setItem("authInfo",JSON.stringify(user))
-            
-        }
+            localStorage.setItem("authInfo",JSON.stringify(resp?.user))
+            localStorage.setItem('token',resp.token)
+    }else{
+        toast.error(resp.message)
+    }
+       
+
+    
         
     } catch (error) {
+        console.log('akbfdasbdjhasldbasj')
         toast.error(error.message)
       
         return error.message
         
     }
-    finally{
-        setLoading(false)
-    }
+    // finally{
+    //     setLoading(false)
+    // }
   
 
 }

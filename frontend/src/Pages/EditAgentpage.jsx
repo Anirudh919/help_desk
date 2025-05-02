@@ -116,7 +116,8 @@ export default function EditAgentForm()
         <h2 className="text-xl font-bold">{user?._id}</h2>
         <div className="flex items-center gap-4 mt-2">
 
-          <img src="https://i.pravatar.cc/40?img=5" alt="Arlene McCoy" className="rounded-full" />
+          <img src={`https://avatar.iran.liara.run/username?username=${formData?.name}`} alt="Arlene McCoy"
+           className="rounded-full h-20" />
           <span className="font-medium">{user?.name}</span>
           <span className=" text-sm bg-gray-900 px-2 py-1 rounded-full capitalize">Role:<strong>{user?.role}</strong></span>
 

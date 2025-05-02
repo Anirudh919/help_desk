@@ -10,16 +10,41 @@ export async function signup(req,res){
     try {
         if(!name || !email ||!password) throw new Error("All fields are requried");
 
-        if(password.length<6) throw new Error("Password must be at least 6 characters long");
+        if(password.length<6) {
+            return res.status(400).json({  status:false,message:"Password should have atleast 6 characters",
+            })
+        }
+       
+        // let user=await User.findOne({email})
 
-        let user=await User.findOne({email})
-        if(user) throw new Error("User already exists with this email")
+        // if(user) throw new Error("User already exists with this email")
+        try {
+         
+            let user = await User.findOne({ email });
+            console.log("Found user:", user);
+            if(user){
+            return res.status(400).json({
+                status:false,
+                message:"Email Already registered",
+                })}
+             
+          } catch (err) {
+
+            console.error("Error during findOne:", err);
+            return res.status(500).json(err)
+          }
+          
 
             // create user
-
-        user=await User.create({name,email,password, ...(role && { role }) })
-        user.salt=bcrypt.genSaltSync(10) 
-        user.password=bcrypt.hashSync(user.password,user.salt)  
+            // console.log({user})
+            
+          
+            const salt = bcrypt.genSaltSync(10);
+const hashedPassword = bcrypt.hashSync(password, salt);
+        let user=await User.create({name,email,password:hashedPassword, ...(role&& {role:role})  })
+        console.log({user})
+        // user.salt=bcrypt.genSaltSync(10) 
+        // user.password=bcrypt.hashSync(user.password,user.salt)  
         await user.save()
 
         const token=generateToken(user._id)
@@ -32,7 +57,8 @@ export async function signup(req,res){
         // })
 
         return res.status(201).json({message:"User created successfully",
-            user,token})
+            user,token,
+        status:true})
         
     } catch (error) {
         

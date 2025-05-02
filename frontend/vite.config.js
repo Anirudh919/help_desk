@@ -9,7 +9,8 @@ export default defineConfig({
   server:{
     proxy: {
       '/api': {
-        target: 'https://help-desk-n6c8.onrender.com/',
+        // target: 'https://help-desk-n6c8.onrender.com/',
+        target:'http://localhost:5000',
         changeOrigin: true,
         
       },

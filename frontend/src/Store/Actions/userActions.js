@@ -23,7 +23,7 @@ export const updateUser=(payload)=>{
 
 }
 
-export const addUser=()=>{
+export const addUser=(payload)=>{ 
     return{
         type:"ADD_TICKET",payload
     }
