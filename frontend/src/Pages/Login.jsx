@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux'
 import {Link } from "react-router-dom"
 export function Login() {
 	const [isView,setIsView]=useState(false)
+	const [isHovered, setIsHovered] = useState(false);
 	
 	const {Login,loading}=useLogin()
 	
@@ -51,7 +52,8 @@ export function Login() {
 						<div className="relative">
 						<FaRegUser className='absolute  top-3 right-2' size={14}/>
 							<input value={inputs.email} onChange={(e)=>setInputs({...inputs,email:e.target.value})}
-							autocomplete="off" id="userName" name="userName" type="text" className="bg-transparent peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-white focus:outline-none focus:border-blue-400" placeholder="Email" />
+							autocomplete="off" id="userName" name="userName" type="text" className="bg-transparent  peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-white focus:outline-none focus:border-blue-400" placeholder="Email"
+							/>
 							<label for="userName" className="absolute left-0 -top-3.5 text-white text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-white peer-focus:text-sm">Email</label>
 						</div>
 						<div className="relative">
@@ -79,7 +81,10 @@ export function Login() {
 								</div>
 							):(
 								<button onClick={()=>Login(inputs)}
-								 className="hover:bg-blue-400 bg-blue-500 text-white rounded-md px-2 py-1">
+								 className="hover:bg-blue-400 bg-blue-500 text-white rounded-md px-2 py-1"
+								style={{backgroundColor:`${isHovered? "#60a5fa":"#3b82f6"}`,cursor:"pointer",borderRadius:"0.375rem",padding:"0.25rem 0.5rem",color:"white"}}
+								 onMouseEnter={() => setIsHovered(true)}
+								 onMouseLeave={() => setIsHovered(false)}>
 									
 									
 									

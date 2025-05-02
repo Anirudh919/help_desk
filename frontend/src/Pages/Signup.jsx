@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 export function Signup() {
 
     const [isView,setIsView]=useState(false)
+    const [isHovered, setIsHovered] = useState(false);
     
     const{signup,loading}=useSignup()
 
@@ -95,7 +96,10 @@ export function Signup() {
                                 </div>
                             ):(
                                 <button onClick={()=>signup(inputs)}
-                                className="hover:bg-emerald-400 bg-emerald-500 text-white rounded-md px-2 py-1">
+                                style={{backgroundColor:`${isHovered? "#34D399":"#10B981"}`,cursor:"pointer",borderRadius:"0.375rem",padding:"0.25rem 0.5rem",color:"white"}}
+                                className="hover:bg-emerald-400 bg-emerald-500 text-white rounded-md px-2 py-1"
+                                onMouseEnter={() => setIsHovered(true)}
+                                onMouseLeave={() => setIsHovered(false)}>
                                     
                                     
                                     
