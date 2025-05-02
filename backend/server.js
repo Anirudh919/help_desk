@@ -26,11 +26,8 @@ app.use(cors())
 const _dirname=path.resolve()
 app.use(express.static(path.join(_dirname,"/frontend/dist")))
 
-app.use(express.static('build'));
 
-app.get('*', function (req, res) {
-  res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
-});
+
 // auth route
 app.use("/api/auth",authRoutes)
 

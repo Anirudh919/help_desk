@@ -32,7 +32,7 @@ const Tickets = () => {
           </div>
 
 
-        <table className="w-full text-sm text-left">
+        <table className="w-5xl mx-auto text-sm  text-left">
           <thead  className=''>
             <tr className="">
               <th># id</th>

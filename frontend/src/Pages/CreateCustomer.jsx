@@ -75,8 +75,8 @@ const CreateCustomer = () => {
           className="w-full bg-gray-900 border rounded px-3 py-2 cursor-pointer"
         >
         <option value="customer">Customer</option>
-        <option value="agent">Agent</option>
-        <option value="admin">Admin</option>
+        
+        
         </select>
       </div>
 

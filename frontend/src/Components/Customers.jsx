@@ -46,7 +46,7 @@ const Customers = () => {
           </div>
 
 
-        <table className="w-full text-sm text-left">
+        <table className=" mx-auto w-5xl text-sm text-left">
           <thead  className=''>
             <tr className="">
               <th># id</th>

@@ -32,11 +32,10 @@ const createUser=async(payload)=>{
             body:JSON.stringify(payload)
 
         })
-        
-        let {user,success,message}=await res.json()
+        let {user,success,error}=await res.json()
 
         
-        if(!user) throw new Error(message);
+        if(!user) throw new Error(error);
         
         else
         {   
@@ -50,20 +49,7 @@ const createUser=async(payload)=>{
         }
         
     } catch (error) {
-        
-        toast.error(error.message,{
-            duration: 3000,
-          },
-            {
-        
-              style: {
-                borderRadius: '10px',
-                background: '#333',
-                color: '#fff',
-              },
-              
-            },
-          )
+        toast.error(error.message)
       
         return error.message
         

@@ -46,14 +46,14 @@ useEffect(()=>{
           <div className="grid grid-cols-3 gap-4  w-full">
           
             <div className="col-span-2 ">
-              <div>
+              <div className=" w-6xl ">
                 <div className="flex justify-between items-center mb-4 px-5 ">
                   <div className="font-semibold text-lg">Tickets</div>
                   <select className="border border-gray-600 rounded px-2 py-1 text-sm">
                     <option>View All Tickets</option>
                   </select>
                 </div>
-                <table className="w-full text-sm">
+                <table className="w-5xl mx-auto text-sm  ">
                   <thead>
                     <tr className="text-gray-300 ">
                       <th className="text-left">Number</th>
@@ -64,7 +64,7 @@ useEffect(()=>{
                       <th className="text-left">Last Update</th>
                     </tr>
                   </thead>
-                  <tbody className=" overflow-auto">
+                  <tbody className=" overflow-auto ">
                     {
                       tickets?.map(ticket=>(
 <tr className=" border-red-500 h-10 ">

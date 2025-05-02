@@ -55,7 +55,7 @@ export async function getAllTickets(req, res) {
 
 export const getMyTickets = async (req, res) => {
   try {
-    const myTickets = await Ticket.find({ createdBy: req.user._id.toString() }).populate()
+    const myTickets = await Ticket.find({ createdBy: req.user._id.toString() }).populate('createdBy', 'name email')
     res.status(200).json({
       success: true,
       message: "Tickets fetched successfully",

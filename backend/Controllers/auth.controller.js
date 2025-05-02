@@ -10,7 +10,7 @@ export async function signup(req,res){
     try {
         if(!name || !email ||!password) throw new Error("All fields are requried");
 
-        if(password.length<6) throw new Error("Password must be at least 6 characters  long");
+        if(password.length<6) throw new Error("Password must be at least 6 characters long");
 
         let user=await User.findOne({email})
         if(user) throw new Error("User already exists with this email")
@@ -33,17 +33,18 @@ export async function signup(req,res){
 
         return res.status(201).json({message:"User created successfully",
             user,token})
-
-        
-
-
         
     } catch (error) {
-        return res.status(500).json({error:error.message})
+        
+        return res.status(500).json(error)
         
     }
 
 }
+
+
+
+
 
 
 // login user

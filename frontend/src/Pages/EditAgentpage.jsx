@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence ,motion} from "framer-motion";
 import { useGetUserbyId } from "../Hooks/Customers/useGetUserById";
 import { useGetMyTickets } from "../Hooks/TicketsHooks/useGetMyTickets";
 import { useSelector } from "react-redux";
@@ -11,7 +11,7 @@ import { useDeleteUserById } from "../Hooks/Customers/useDeleteUserById";
 
 
 
-export default function EditAgentForm({ onSubmit })
+export default function EditAgentForm()
  {
 
   const {id}=useParams()
@@ -19,8 +19,9 @@ export default function EditAgentForm({ onSubmit })
   const {getMyTickets}=useGetMyTickets()
   const {updateUserById}=useUpdateUserById()
   const myTickets=useSelector(state=>state.TicketReducer)
-  const {deleteUserById,}=useDeleteUserById()
+  const {deleteUserById}=useDeleteUserById()
 
+  console.log(myTickets)
 
   const [formData, setFormData] = useState({
     name: "",
@@ -44,7 +45,7 @@ export default function EditAgentForm({ onSubmit })
   useEffect(()=>{
     getMyTickets()
     getUserById(id)
-  },[])
+  },[id])
 
 
 
@@ -56,7 +57,6 @@ export default function EditAgentForm({ onSubmit })
       setFormData({
         name: user.name || '',
         email: user.email || '',
-        phone: user.phone || '',
        
         department: user.department || '',
         status: user.status || '',
@@ -80,15 +80,20 @@ export default function EditAgentForm({ onSubmit })
     console.log(formData)
     updateUserById(id,formData);
     setFormData({
-      username: "",
+      name: "",
       email: "",
-      phone: "",
       department: "",
       status: "",
       ticketsAssigned: 0,
       ticketsCompleted: 0,
     });
-  };
+  };const handleDelete=()=>{
+    if(confirm("Are You Sure")){
+      deleteUserById(id)
+    }
+  }
+
+
 
   return (<div className="flex items-start justify-center ">
 
@@ -132,12 +137,7 @@ className="w-full border px-10 rounded cursor-pointer hover:text-gray-300 mx-aut
      </div>
    
       <button className="w-full px-3 border text-red-600  rounded cursor-pointer hover:text-red-400"
-      onClick={()=>{
-        if(confirm("Are You Sure")){
-          deleteUserById(id)
-        }
-        
-      }}
+      onClick={()=>handleDelete()}
       >Delete</button>
     </div>
         </div>
@@ -186,7 +186,7 @@ className="w-full border px-10 rounded cursor-pointer hover:text-gray-300 mx-aut
             
           
             {/* <td>{ticket.service}</td> */}
-            <td > {ticket?.createdBy?ticket?.createdBy : "###"} </td>
+            <td > {ticket?.createdBy?.name} </td>
             
             <td className={`${ticket.status=="pending"?`text-red-500`:`${ticket.status=='open'?`text-blue-500`:`text-green-500`}`} capitalize`}>{ticket?.status}</td>
           
@@ -236,7 +236,7 @@ className="w-full border px-10 rounded cursor-pointer hover:text-gray-300 mx-aut
 
   <AnimatePresence>
 
-  </AnimatePresence>
+  
 
 {
   isEditOpen && (
@@ -350,7 +350,7 @@ className="w-full border px-10 rounded cursor-pointer hover:text-gray-300 mx-aut
     </motion.form>
   )
 }
-
+</AnimatePresence>
 
 
 
